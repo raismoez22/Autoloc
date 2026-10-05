@@ -1,6 +1,7 @@
 package tn.esprit.autolocapi.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,56 +10,28 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "Paiement")
+@Table(name = "paiement")
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Paiement {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    Long idPaiement;
-    BigDecimal montant;
-    LocalDate datePaiement;
-    ModePaiement modePaiement;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idPaiement;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal montant;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(nullable = false)
+    private LocalDate datePaiement;
 
-    public Long getIdPaiement() {
-        return idPaiement;
-    }
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private ModePaiement modePaiement;
 
-    public void setIdPaiement(Long idPaiement) {
-        this.idPaiement = idPaiement;
-    }
-
-    public BigDecimal getMontant() {
-        return montant;
-    }
-
-    public void setMontant(BigDecimal montant) {
-        this.montant = montant;
-    }
-
-    public LocalDate getDatePaiement() {
-        return datePaiement;
-    }
-
-    public void setDatePaiement(LocalDate datePaiement) {
-        this.datePaiement = datePaiement;
-    }
-
-    public ModePaiement getModePaiement() {
-        return modePaiement;
-    }
-
-    public void setModePaiement(ModePaiement modePaiement) {
-        this.modePaiement = modePaiement;
-    }
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "contrat_id")
+    private Contrat contrat;
 }

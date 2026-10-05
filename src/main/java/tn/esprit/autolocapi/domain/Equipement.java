@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "equipement")
 @Getter
@@ -21,19 +24,6 @@ public class Equipement {
     @Column(nullable = false, unique = true, length = 50)
     private String libelle;
 
-    public Long getIdEquipement() {
-        return idEquipement;
-    }
-
-    public void setIdEquipement(Long idEquipement) {
-        this.idEquipement = idEquipement;
-    }
-
-    public String getLibelle() {
-        return libelle;
-    }
-
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
+    @ManyToMany(mappedBy = "equipements")
+    private List<Vehicule> vehicules = new ArrayList<>();
 }

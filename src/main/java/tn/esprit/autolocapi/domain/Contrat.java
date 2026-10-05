@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "contrat")
@@ -30,35 +32,10 @@ public class Contrat {
     @Column(nullable = false)
     private boolean valide;
 
-    public Long getIdContrat() {
-        return idContrat;
-    }
+    @OneToOne
+    @JoinColumn(name = "reservation_id", unique = true)
+    private Reservation reservation;
 
-    public void setIdContrat(Long idContrat) {
-        this.idContrat = idContrat;
-    }
-
-    public LocalDate getDateSignature() {
-        return dateSignature;
-    }
-
-    public void setDateSignature(LocalDate dateSignature) {
-        this.dateSignature = dateSignature;
-    }
-
-    public BigDecimal getMontantTotal() {
-        return montantTotal;
-    }
-
-    public void setMontantTotal(BigDecimal montantTotal) {
-        this.montantTotal = montantTotal;
-    }
-
-    public boolean isValide() {
-        return valide;
-    }
-
-    public void setValide(boolean valide) {
-        this.valide = valide;
-    }
+    @OneToMany(mappedBy = "contrat", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Paiement> paiements = new ArrayList<>();
 }

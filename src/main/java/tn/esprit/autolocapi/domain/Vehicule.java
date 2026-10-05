@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "vehicule")
@@ -40,59 +42,21 @@ public class Vehicule {
     @Column(nullable = false, length = 20)
     private StatutVehicule statut;
 
-    public Long getIdVehicule() {
-        return idVehicule;
-    }
+    @ManyToOne
+    @JoinColumn(name = "agence_id")
+    private Agence agence;
 
-    public void setIdVehicule(Long idVehicule) {
-        this.idVehicule = idVehicule;
-    }
+    @OneToMany(mappedBy = "vehicule", cascade = CascadeType.ALL)
+    private List<Maintenance> maintenances = new ArrayList<>();
 
-    public String getImmatriculation() {
-        return immatriculation;
-    }
+    @ManyToMany
+    @JoinTable(
+            name = "vehicule_equipement",
+            joinColumns = @JoinColumn(name = "vehicule_id"),
+            inverseJoinColumns = @JoinColumn(name = "equipement_id")
+    )
+    private List<Equipement> equipements = new ArrayList<>();
 
-    public void setImmatriculation(String immatriculation) {
-        this.immatriculation = immatriculation;
-    }
-
-    public String getMarque() {
-        return marque;
-    }
-
-    public void setMarque(String marque) {
-        this.marque = marque;
-    }
-
-    public String getModele() {
-        return modele;
-    }
-
-    public void setModele(String modele) {
-        this.modele = modele;
-    }
-
-    public CategorieVehicule getCategorie() {
-        return categorie;
-    }
-
-    public void setCategorie(CategorieVehicule categorie) {
-        this.categorie = categorie;
-    }
-
-    public BigDecimal getTarifJournalier() {
-        return tarifJournalier;
-    }
-
-    public void setTarifJournalier(BigDecimal tarifJournalier) {
-        this.tarifJournalier = tarifJournalier;
-    }
-
-    public StatutVehicule getStatut() {
-        return statut;
-    }
-
-    public void setStatut(StatutVehicule statut) {
-        this.statut = statut;
-    }
+    @OneToMany(mappedBy = "vehicule")
+    private List<Reservation> reservations = new ArrayList<>();
 }

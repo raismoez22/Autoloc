@@ -30,35 +30,14 @@ public class Reservation {
     @Column(nullable = false, length = 20)
     private StatutReservation statut;
 
-    public Long getIdReservation() {
-        return idReservation;
-    }
+    @ManyToOne
+    @JoinColumn(name = "vehicule_id")
+    private Vehicule vehicule;
 
-    public void setIdReservation(Long idReservation) {
-        this.idReservation = idReservation;
-    }
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 
-    public LocalDate getDateDebut() {
-        return dateDebut;
-    }
-
-    public void setDateDebut(LocalDate dateDebut) {
-        this.dateDebut = dateDebut;
-    }
-
-    public LocalDate getDateFin() {
-        return dateFin;
-    }
-
-    public void setDateFin(LocalDate dateFin) {
-        this.dateFin = dateFin;
-    }
-
-    public StatutReservation getStatut() {
-        return statut;
-    }
-
-    public void setStatut(StatutReservation statut) {
-        this.statut = statut;
-    }
+    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
+    private Contrat contrat;
 }

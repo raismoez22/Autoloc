@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "agence")
 @Getter
@@ -30,43 +33,9 @@ public class Agence {
     @Column(nullable = false, length = 20)
     private String telephone;
 
-    public Long getIdAgence() {
-        return idAgence;
-    }
+    @OneToMany(mappedBy = "agence", cascade = CascadeType.ALL)
+    private List<Employe> employes = new ArrayList<>();
 
-    public void setIdAgence(Long idAgence) {
-        this.idAgence = idAgence;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getVille() {
-        return ville;
-    }
-
-    public void setVille(String ville) {
-        this.ville = ville;
-    }
-
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
+    @OneToMany(mappedBy = "agence", cascade = CascadeType.ALL)
+    private List<Vehicule> vehicules = new ArrayList<>();
 }
